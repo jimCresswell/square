@@ -1,0 +1,36 @@
+5. Generally tidy up the OO design.
+1. Make the width and height driven by the map, no need to set it in the CSS. DONE.
+2. Have all operations work in tile x,y co-ordinates, then render in pixels. DONE.
+3. Make walls blocking. DONE.
+4. Generalise the object definition including event listening so that it's easy to create multiple player objects. DONE.
+6. Implement using Damiens graphics -> settimeout/pub-sub based animations, suspended key-press listeners (debounce) during animation.
+7. Make the player keys configurable -> Have a UI other than the game area.
+8. Loading screen.
+9. pre-cache images?
+10. Bomber man/ Pac Man.
+11. Distribution from a server.
+11a. Show friends.
+12. Phone Gap.
+13. walls rather than ground.
+	a. different symbols for different wall pieces. PARTIALLY DONE.
+	b. implement multiple background images -> [requires two maps] requires one map with character pairs… terrain level (creates the divs) all features are non blocking, feature level, walls, rocks, features can be blocking. DONE.
+
+14. Have the character change facing direction on key press if directions don't match, else move player. Requires a level of abstraction for processing commands.
+
+16. Set the height and width of the game area programatically, otherwise there will be no border around the game, and other elements will not flow properly on the page.
+
+17. Instead of the number of characters in a square store the unique ids in an array. DONE.
+
+18. Game rules. Two game end conditions. 1) Last man standing. 2) Player with most points when the gate is reached.
+
+19. Implement an exit gate.
+
+20. Investigate using CSS transitions rather than setting top and left on absolute elements, possible that transition does not cause a re-paint whereas changing position does.
+
+15. Make the multiple image background-image urls programatic…. no ones wants to have to write 30 news CSS definitions every time you add one new terrain type. Double check there is no way of doing this with a style file first…. can programmatically add rules to style sheets, set the resource in the map key and construct the styleSheet from the keys. DONE
+
+21. Use the multiple background images for some graphics resources to randomly set the graphic.
+
+22. Replace the invalid character keys. 
+
+23. 

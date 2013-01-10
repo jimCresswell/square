@@ -1,0 +1,83 @@
+/*
+* 
+*/
+
+body {
+	font-family: Verdana, Sans-serif; 
+}
+
+#ui {
+	position: relative;
+}
+
+#settings {
+	float: left;
+	border-style: solid;
+	border-width: 1px;
+	padding-left: 8px;
+
+	/* TODO make the width and layout definiton be media query driven. Height should match game world */
+	width: 256px;
+	height: 512px;
+}
+
+#gameArea {
+	position: relative;
+	float: left;
+	margin-right: 20px;
+	border-style: solid;
+	
+	/* TODO make the width and height setting programatic and driven by map definition */
+	width: 768px;
+	height: 512px;
+}
+
+#groundLayer {
+	position: absolute;
+	z-index: 10;
+}
+
+.player {
+	height: 32px;
+	width: 32px;
+	z-index: 100;
+	position: absolute;
+/* 	background-image:url('resources/graphics/player.png'); */
+	background-image:url('resources/graphics/BaBomb_png/man_f.png');
+	background-repeat:no-repeat;
+}
+
+.rat {
+	height: 32px;
+	width: 32px;
+	z-index: 100;
+	position: absolute;
+	background-image:url('resources/graphics/rat/rat1.png');
+	background-repeat:no-repeat;
+}
+
+#gameArea .background {
+	height: 32px;
+	width: 32px;
+	position: absolute;
+}
+
+#gameArea #sizer.background {
+	display: none;
+}
+
+#gameArea .background.error1 {
+	background-color: navy;
+	background-image: none !important;
+}
+
+#gameArea .background.error2 {
+	background-color: fuchsia;
+	background-image: none !important;
+}
+
+
+
+
+
+
