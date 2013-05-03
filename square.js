@@ -3,8 +3,8 @@
 */
 
 var utils = {};
-utils.getRandomInt = function (min, max) {  
-	return Math.floor(Math.random() * (max - min + 1)) + min;  
+utils.getRandomInt = function (min, max) {
+	return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
 // A (probably quite slow) generator of a normally distributed number in the range -1 to 1. Three numbers means a maximum deviation of three sigma from mean.
@@ -17,7 +17,7 @@ utils.rand_normal = function (mu, sigma) {
     return utils.random_standardNormalDist()*sigma+mu;
 }
 
-// Test a match between ascii decimal character codes. If the first key is an upper case letter then test again lower case letters as well. 
+// Test a match between ascii decimal character codes. If the first key is an upper case letter then test again lower case letters as well.
 utils.keyMatch = function (key1, key2) {
 	if (key1 === key2) return true;
 	if ( key1 > 64 && key1 < 91) {
@@ -55,8 +55,8 @@ world.rawMap.map = [
 
 // Process the text map into a series of arrays. For a given set of coordinates, each map array in mapList will try to grab the corresponding character in the str representing each map tile. Where no character exists a value of undefined will be assigned to the coordinate on that map, this will be processed as the default value for that map.
 world.rawMap.process = function (raw, mapList) {
-	
-	var worldRow_str, 
+
+	var worldRow_str,
 		worldRow_arr,
 		rowItr,
 		columnItr,
@@ -66,30 +66,30 @@ world.rawMap.process = function (raw, mapList) {
 
 	// Set the world height from the raw map.
 	if (!world.height) world.height = raw.length;
-	
+
 	// Iterate over each map
 	for (mapItr = 0; mapItr < numMaps; mapItr += 1) {
-		
+
 		// Iterate over the rows of the map.
 		for (rowItr = 0; rowItr < world.height; rowItr += 1) {
-	
+
 			worldRow_str = raw[rowItr];
 			worldRow_arr = worldRow_str.split(/\s+/);
-	
+
 			// Set the world width from the raw map.
 			if (!world.width) world.width = worldRow_arr.length;
-			
+
 			// Create an empty array to hold the row on the target map.
 			mapList[mapItr][rowItr] = [];
 
 			// Iterate over the columns within the row.
 			for (columnItr=0; columnItr < world.width; columnItr += 1) {
-			
+
 				// Get the set of characters representing each tile in the world.
 				tile_str = worldRow_arr[columnItr];
 
 				// Push the characters from the raw map tile string into the maps in order, where no string exists the special value undefined will be set. The first map is the occupation level of each tile.
-				
+
 				// BODGE The proper code is commented out immediately below this comment, the replacement code allows comparisons with characters that javascript converts to sets of other characters, but prevents more maps from being added. The proper solution is to use supported characters, or add support for all UTF-8 characters.
 				// mapList[mapItr][rowItr][columnItr] = (mapItr === 0) ? [] : tile_str[mapItr-1];
 				if (mapItr === 0) {
@@ -99,8 +99,8 @@ world.rawMap.process = function (raw, mapList) {
 				} else {
 					mapList[mapItr][rowItr][columnItr] = tile_str.substring(1);
 				}
-				
-			}	
+
+			}
 		}
 	}
 }
@@ -108,7 +108,7 @@ world.rawMap.process = function (raw, mapList) {
 world.terrain = {};
 world.terrain.map = [];
 world.terrain.key = {
-	'"' : { 
+	'"' : {
 			class: 'grass ',
 			occupiable: true,
 			resource: './resources/graphics/grass/grass.png'
@@ -145,13 +145,13 @@ world.terrain.key = {
 world.features = {};
 world.features.map = [];
 world.features.key = {
-	'+' : { 
+	'+' : {
 			class: 'wall_cross ',
 			occupiable: false,
 			resource: './resources/graphics/wall/wall_15.png'
 		},
 
-	'|' : { 
+	'|' : {
 			class: 'wall_vertical ',
 			occupiable: false,
 			resource: './resources/graphics/wall/wall_05.png'
@@ -253,10 +253,10 @@ world.createCSSRules = function () {
 			terrain = world.terrain.key[terrain];
 			terrainResource = terrain.resource;
 			terrainClass = terrain.class;
-			
+
 			// Terrain only CSS definitions.
 			if (terrainResource) {
-				rule = '#gameArea .' + terrainClass + '{ 	background-image:url(\'' + terrainResource + '\'); background-repeat:no-repeat; }'; 
+				rule = '#gameArea .' + terrainClass + '{ 	background-image:url(\'' + terrainResource + '\'); background-repeat:no-repeat; }';
 				cssRules.insertRule(rule,0);
 			}
 			for (feature in world.features.key) {
@@ -264,7 +264,7 @@ world.createCSSRules = function () {
 					feature = world.features.key[feature];
 					featureResource = feature.resource;
 					featureClass = feature.class;
-					
+
 					// Terrain and feature CSS definitions.
 					if (terrainResource && featureResource) {
 						rule = '#gameArea .' + terrainClass.replace(' ','') + '.' + featureClass + '{ 	background-image:url(\'' + featureResource + '\'), url(\'' + terrainResource + '\'); background-repeat:no-repeat; }';
@@ -298,13 +298,13 @@ world.rawMap.process(world.rawMap.map, world.mapList);
 
 // Read the map symbols and return objects describing the contents of the map tile.
 world.getMapDefinition = function (position, mapType) {
-	var symbol, 
+	var symbol,
 		definition;
-	
+
 	// Get the map symbol from the specified position on the specified map. The maps are defined by row first, column second.
 	// TODO When parsing the maps from an external source change them to be defined in column, row order.
 	symbol = world[mapType].map[position.y][position.x];
-	
+
 	// If there was a symbol attempt to read the definition class and return it to the caller.
 	if (symbol) {
 		definition = world[mapType].key[symbol];
@@ -315,13 +315,13 @@ world.getMapDefinition = function (position, mapType) {
 	if (definition) {
 		return definition;
 	}
-	
+
 	// Default behaviour.
 	console.log('Could not match character: ', symbol);
 	return {
 		class: 'error2',
 		occupiable: false
-	};	
+	};
 };
 
 // Find the game area element;
@@ -346,10 +346,10 @@ world.getUID = (function () {
 
 // Implement object movement.
 // TODO: have this function work on x and y coordinates only, have the render function handle the conversion to pixel position by calling a method of the world object
-// TODO: then can get rid of reference to ground layer.width and no longer expose that  
+// TODO: then can get rid of reference to ground layer.width and no longer expose that
 var moveObject = function(o, direction) {
 	var changedPositions = [], x, y;
-	
+
 	x = o.x;
 	y = o.y;
 
@@ -369,27 +369,27 @@ var moveObject = function(o, direction) {
 	} else {
 		console.log('Oops, it has all gone wrong');
 	}
-	
+
 	// Implement periodic boundary conditions.
 	// TODO Make these functions, called on key press, otherwise will call them for any key press.
 	if (x > (world.width - 1)) x = 0;
 	if (x < 0) x = (world.width - 1);
-	
+
 	if (y > (world.height - 1)) y = 0;
 	if (y < 0 ) y = (world.height - 1);
-	
+
 	// Update the object position on screen if a position change occurred and if the move if valid (not blocked by a map feature).
 	if ( (changedPositions.length !== 0) && (world.getMapDefinition({'x':x, 'y':y},'features').occupiable) && (world.occupation.getOccupationLevel(x ,y) < 1) ) {
-	
+
 		// Update the occupation levels of the old and new tile.
 		world.occupation.inc(x, y);
 		world.occupation.dec(o.x, o.y);
-	
+
 		// Update the object's recorded position and render the change.
 		o.x = x;
 		o.y = y;
 		o.renderPosition(changedPositions);
-		
+
 		return true;
 	} else {
 		return false;
@@ -407,9 +407,9 @@ var Character = function (characterDefinition) {
 	var that = this,
 		domdir = {
 			x: 'left',
-			y: 'top' 
+			y: 'top'
 		};
-	
+
 	that.class = characterDefinition.class;
 	that.x = characterDefinition.startX;
 	that.y = characterDefinition.startY;
@@ -419,9 +419,9 @@ var Character = function (characterDefinition) {
 	if (characterDefinition.keys) that.keys.down = characterDefinition.keys.down;
 	if (characterDefinition.keys) that.keys.left = characterDefinition.keys.left;
 	if (characterDefinition.keys) that.keys.right = characterDefinition.keys.right;
-	
+
 	if (characterDefinition.brain) that.brain = characterDefinition.brain;
-	
+
 	// Start the character listening for key presses and provide methods to turn it on and off. This is to prevent held keys moving the character repeatedly, and will also be used to ignore key presses during animations.
 		that.lastKeyListenedTo = false;
 		that.listening = true;
@@ -443,7 +443,7 @@ var Character = function (characterDefinition) {
 
 	that.setElement = function () {
 		var numCharacters = characerListNodes.length, chrItr;
-		
+
 		for (chrItr = 0; chrItr < numCharacters; chrItr += 1) {
 			if (that.id === characerListNodes[chrItr].id) {
 				that.element = characerListNodes[chrItr];
@@ -454,15 +454,17 @@ var Character = function (characterDefinition) {
 
 	// TODO store the object {x: 'left', y: 'top'} then have the renderPosition called with 'x' and 'y' instead of top and left, and update the dom using the reference object we just denied.
 	that.renderPosition = function (directions) {
-		
+
 		if (directions.constructor.name === "Array") {
 			directions.forEach( function (direction) {
 				that.element.style[domdir[direction]] = world.transformTileToPixel(that[direction]) + "px";
 			});
 		} else {
+
+			// REVIEW:JC:20130329: What is this for? Is direction defined at this point?
 			that.element.style[domdir[direction]] = world.transformTileToPixel(that[directions]) + "px";
 		}
-		
+
 	};
 
 	that.moveCharacter = function (event) {
@@ -470,10 +472,10 @@ var Character = function (characterDefinition) {
 		return moveObject(theOther, event);
 	};
 
-	
+
 	// Insert the character into the DOM.
 	that.createCharacterEl();
-	
+
 	// initialise, carry out the above functions necessary for initialisation
 	that.initialise = function () {
 		that.setElement();
@@ -481,7 +483,7 @@ var Character = function (characterDefinition) {
 		world.occupation.inc(that.x, that.y);
 		that.renderPosition(['x','y']);
 		if (that.brain) that.brain(that);
-	} 
+	}
 
 };
 
@@ -496,14 +498,14 @@ var groundLayer = (function () {
 		height = world.height,
 		width = world.width,
 		tileBackground;
-		
+
 		// function insert the ground layer and its child divs into the game area.
 		tileBackground = function () {
 			var
 				html = gameAreaEl.innerHTML,
 				x, y,
 				getClass = function (mapType) {
-				
+
 					// TODO: If the returned resource type is an array then assign class <class>_<random 0..length>. This will correspond to dynamic css classes already generated. Allows random usage of terrain variation.
 					return world.getMapDefinition({'x':x, 'y':y}, mapType).class;
 				},
@@ -520,11 +522,11 @@ var groundLayer = (function () {
 			html += '</div>';
 			gameAreaEl.innerHTML = html;
 		}
-		
+
 		return {
 			tileBackground: tileBackground
 		}
-		
+
 })();
 
 // TODO: Create an array of impassable position indices.
@@ -538,7 +540,7 @@ var groundLayer = (function () {
 
 // Side project: rats could hold a map, in their brains, of which directions are possible for each tile they have visited, which a small chance of trying previously failed directions in order to adapt to changeable environments.
 var ratBrain = function (thisRat) {
-	var 
+	var
 		directions = ['left', 'right', 'up', 'down'],
 		i,
 		success,
@@ -560,7 +562,7 @@ var ratBrain = function (thisRat) {
 			setTimeout(thoughtProcess, minThoughtTime);
 		}
 	};
-	
+
 	// Start thinking…
 	thoughtProcess();
 };
@@ -605,7 +607,7 @@ playerDefinitionList.push ({
 
 /*
 * Game mechanics set up
-*/ 
+*/
 
 // Tile the background. Have to do this before any characters are created.
 groundLayer.tileBackground();
@@ -638,13 +640,13 @@ characterList.forEach( function(character) {
 
 
 
-// Define the interface/controller logic for players 
+// Define the interface/controller logic for players
 interface = {};
 
 // Key press.. move the player then optionally stop listening.
 interface.MoveOnKeyMatch = function (event) {
 
-	var 
+	var
 		player,
 		playerItr,
 		numPlayers = playerList.length,
@@ -652,12 +654,12 @@ interface.MoveOnKeyMatch = function (event) {
 
 	event.stopPropagation();
 	event.preventDefault();
-	
+
 	for (playerItr = 0; playerItr < numPlayers; playerItr += 1) {
 		player = playerList[playerItr];
-		
+
 		if (!player.listening) break;
-		
+
 		if ( keyMatch(event.which, player.keys.up) ) {
 			player.moveCharacter('up');
 			player.lastKeyListenedTo = event.which;
@@ -685,7 +687,7 @@ interface.MoveOnKeyMatch = function (event) {
 
 // If the key up event key matches the key that a player last listened to then start make that player start listening again. ADAPT FOR USE DURING ANIMATION SEQUENCES ON 'ANIMATION END' EVENT FIRING FOR A GIVEN PLAYER.
 interface.startListeningOnKeyMatch = function (event) {
-	var 
+	var
 		player,
 		playerItr,
 		numPlayers = playerList.length,
@@ -693,10 +695,10 @@ interface.startListeningOnKeyMatch = function (event) {
 
 	event.stopPropagation();
 	event.preventDefault();
-	
+
 	for (playerItr = 0; playerItr < numPlayers; playerItr += 1) {
 		player = playerList[playerItr];
-		
+
 		if ( !player.listening ) {
 			if( keyMatch(event.which, player.lastKeyListenedTo) ) {
 				player.startListening();
