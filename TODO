@@ -6,11 +6,8 @@
 6. Implement using Damiens graphics -> settimeout/pub-sub based animations, suspended key-press listeners (debounce) during animation.
 7. Make the player keys configurable -> Have a UI other than the game area.
 8. Loading screen.
-9. pre-cache images?
 10. Bomber man/ Pac Man.
-11. Distribution from a server.
-11a. Show friends.
-12. Phone Gap.
+12. Phone Gap investigation.
 13. walls rather than ground.
 	a. different symbols for different wall pieces. PARTIALLY DONE.
 	b. implement multiple background images -> [requires two maps] requires one map with character pairs… terrain level (creates the divs) all features are non blocking, feature level, walls, rocks, features can be blocking. DONE.
@@ -31,6 +28,6 @@
 
 21. Use the multiple background images for some graphics resources to randomly set the graphic.
 
-22. Replace the invalid character keys. 
+22. Replace the invalid character keys.
 
-23. 
+23.

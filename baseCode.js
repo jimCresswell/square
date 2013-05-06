@@ -609,40 +609,6 @@ playerDefinitionList.push ({
 	brain: false
 });
 
-/*
-* Game mechanics set up
-*/
-
-// Tile the background. Have to do this before any characters are created.
-groundLayer.tileBackground();
-
-// Create players
-var playerList = [];
-playerDefinitionList.forEach(function (definition) {
-	var tmpPlayer = new Character(definition);
-	playerList.push(tmpPlayer);
-	characterList.push(tmpPlayer);
-});
-
-
-// Create rats
-var ratList = [],
-	numRats = 4;
-for (var ratItr = 0; ratItr < numRats; ratItr += 1) {
-	ratList[ratItr] = new Character(ratDefinition);
-	characterList.push(ratList[ratItr]);
-}
-
-
-// Populate the DOM node list of characters.
-characerListNodes = document.querySelectorAll('.character');
-
-// Initialise each character
-characterList.forEach( function(character) {
-	character.initialise();
-});
-
-
 
 // Define the controller logic for players
 controller = {};
@@ -713,12 +679,63 @@ controller.startListeningOnKeyMatch = function (event) {
 
 };
 
-// Add the key event listeners to the page.
 
-// This system feels horrible. Something seems to be blocking key listening preferentially for one player over the other.
+/**
+ * The list of players, needed globally.
+ */
+var playerList = [];
+
+
 /*
-document.addEventListener('keydown', controller.MoveOnKeyMatch, true);
-document.addEventListener('keyup', controller.startListeningOnKeyMatch, true);
+* Game mechanics set up
 */
-document.addEventListener('keyup', controller.MoveOnKeyMatch, true);
+function init() {
+
+
+	// Tile the background. Have to do this before any characters are created.
+	groundLayer.tileBackground();
+
+	// Create players
+	playerDefinitionList.forEach(function (definition) {
+		var tmpPlayer = new Character(definition);
+		playerList.push(tmpPlayer);
+		characterList.push(tmpPlayer);
+	});
+
+
+	// Create rats
+	var ratList = [],
+		numRats = 4;
+	for (var ratItr = 0; ratItr < numRats; ratItr += 1) {
+		ratList[ratItr] = new Character(ratDefinition);
+		characterList.push(ratList[ratItr]);
+	}
+
+
+	// Populate the DOM node list of characters.
+	characerListNodes = document.querySelectorAll('.character');
+
+	// Initialise each character
+	characterList.forEach( function(character) {
+		character.initialise();
+	});
+
+	// Add the key event listeners to the page.
+
+	// This system feels horrible. Something seems to be blocking key listening preferentially for one player over the other.
+	/*
+	document.addEventListener('keydown', controller.MoveOnKeyMatch, true);
+	document.addEventListener('keyup', controller.startListeningOnKeyMatch, true);
+	*/
+	document.addEventListener('keyup', controller.MoveOnKeyMatch, true);
+}
+
+/**
+ * Exports
+ */
+
+exports.init = init;
+
+
+
 

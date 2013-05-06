@@ -1,6 +1,18 @@
 #!/usr/bin/env node
 
 /**
+ * TODO:
+ * 1. Copy production required files only.
+ *
+ * 2. Make sure that changed files are replaced in the copy.
+ *
+ * 3. Have the main html file generated from a template so
+ * it can use a dynamic js version number to prevent bad
+ * cahceing.
+ *
+ */
+
+/**
  * Dependencies
  */
 var exec = require('child_process').exec;
